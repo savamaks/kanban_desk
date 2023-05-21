@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import SelectTask from "./SelectTask";
 
 const Input = styled.input`
     border: none;
@@ -18,7 +19,6 @@ const Form = styled.form`
     align-items: start;
     gap: 15px;
 `;
-
 const Button = styled.button<{ bg: string; color: string }>`
     font-style: normal;
     font-weight: 400;
@@ -29,17 +29,8 @@ const Button = styled.button<{ bg: string; color: string }>`
     border-radius: 5px;
 `;
 
-const Select = styled.select`
-    width: 100%;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
-    color: #000000;
-`;
-const Option = styled.option``;
 
-const InputBlock = ({ mainInput, previousArrBlock, arrBlock, initTask }: any): JSX.Element => {
+const InputBlock = ({blockRef, mainInput, previousArrBlock, arrBlock, initTask }: any): JSX.Element => {
     const [input, setInput] = useState("");
     const [click, setClick] = useState(false);
     const [valueOption, setValueOption] = useState("");
@@ -57,18 +48,23 @@ const InputBlock = ({ mainInput, previousArrBlock, arrBlock, initTask }: any): J
 
         if (input !== "") {
             initTask({
-                id: date,
+                nameBlock:blockRef.current.dataset.nameblock,
+                date: date,
                 name: input,
                 description: "",
+                arrBlock: arrBlock,
+                previousArrBlock: previousArrBlock,
             });
-
             setInput("");
         } else if (valueOption !== "") {
 
             initTask({
-                id: date,
+                nameBlock:blockRef.current.dataset.nameblock,
+                date: date,
                 name: valueOption,
                 description: "",
+                arrBlock: arrBlock,
+                previousArrBlock: previousArrBlock,
             });
             setValueOption("");
         }
@@ -80,19 +76,10 @@ const InputBlock = ({ mainInput, previousArrBlock, arrBlock, initTask }: any): J
 
     return (
         <Form>
+    
             {mainInput && click && <Input type="text" value={input} onChange={changeInput} placeholder="Введите заметку..." />}
 
-            {!mainInput && click && (
-                <Select onChange={changeSelect} name="">
-
-                    <Option defaultValue="csdfsf"></Option>
-
-                    {previousArrBlock.map((el: any, index: number): JSX.Element => {
-
-                        return <Option key={index}>{el.name}</Option>;
-                    })}
-                </Select>
-            )}
+            {!mainInput && click && <SelectTask changeSelect={changeSelect} previousArrBlock={previousArrBlock} />}
 
             <Button onClick={clickButtonAdd} bg={!click ? "none" : "#0079BF"} color={!click ? "#5E6C84" : "#FFFFFF"}>
                 {!click ? "+Add card" : "Submit"}

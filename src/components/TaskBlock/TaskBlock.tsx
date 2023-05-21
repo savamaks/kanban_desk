@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import InputBlock from "./Input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import TaskItem from "./TaskItem";
 
 const Block = styled.div`
@@ -12,6 +12,7 @@ const Block = styled.div`
     border-radius: 10px;
     width: 282px;
     padding: 12px;
+    max-height: 85vh;
 `;
 
 const Title = styled.h2`
@@ -24,13 +25,15 @@ const Title = styled.h2`
 
 
 
-const TaskBlock = ({mainInput,previousArrBlock,arrBlock, initTask, title }: any): JSX.Element => {
+const TaskBlock = ({initFullTask,nameBlock, mainInput,previousArrBlock,arrBlock, initTask, title }: any): JSX.Element => {
    
+    const blockRef = useRef(null)
+
     return (
-        <Block>
-            <Title>{title}</Title>
-            <TaskItem arrBlock={arrBlock}/>
-            <InputBlock mainInput={mainInput} previousArrBlock={previousArrBlock} arrBlock={arrBlock} initTask={initTask}/>
+        <Block data-nameblock={nameBlock} ref={blockRef}  >
+            <Title >{title}</Title>
+            <TaskItem initFullTask={initFullTask} arrBlock={arrBlock}/>
+            <InputBlock blockRef={blockRef} mainInput={mainInput} previousArrBlock={previousArrBlock} arrBlock={arrBlock} initTask={initTask}/>
         </Block>
     );
 };

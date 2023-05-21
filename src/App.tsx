@@ -1,4 +1,7 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import {  Routes,Route } from 'react-router-dom'
+
 import styled from "styled-components";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -17,11 +20,17 @@ const Container = styled.div`
 
 const App = (): JSX.Element => {
     return (
-        <Container>
+        <BrowserRouter>
+            <Container>
+            {/* <Routes>
+            <Route path='/articles' element={<Header />}></Route>
+            </Routes>
+                 */}
             <Header />
-            <Main />
-            <Footer />
-        </Container>
+                <Main />
+                <Footer />
+            </Container>
+        </BrowserRouter>
     );
 };
 
