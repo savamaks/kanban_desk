@@ -1,57 +1,103 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import cross from "../icons/close.svg";
+import { Link } from "react-router-dom";
+import { Context } from "./context";
 
 const Container = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     background: #ffffff;
     border-radius: 5px;
     width: 100%;
+    height: 100%;
+    padding: 22px 28px;
 `;
 const Button = styled.button`
+    position: absolute;
     font-size: 25px;
-    background: blue;
     width: max-content;
-    align-self: center;
+    right: 20px;
+    top: 20px;
 `;
+
 const InputTextArea = styled.textarea`
     border: none;
-    width: max-content;
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+    resize: none;
 `;
+
+const arr = [
+    {
+        title: "backlog",
+        issues: [
+            {
+                id: "12345",
+                name: "Sprint bugfix",
+                description: "",
+            },
+        ],
+    },
+    {
+        title: "ready",
+        issues: [
+            {
+                id: "1",
+                name: "S",
+                description: "",
+            },
+        ],
+    }
+];
+
+
+
 
 
 
 const FullTask = ({ fullTask, saveDes }: any): JSX.Element => {
-    console.log(fullTask);
+    // console.log(fullTask);
+    const init = useContext(Context);
 
-    const [description, setDescription] = useState(fullTask.description ? fullTask.description : "");
+    const [description, setDescription] = useState("");
 
     const changeDescription = (e: any) => {
-        // console.log(e.target.value);
         setDescription(e.target.value);
     };
 
-    const saveDescription = (e:any) => {
+    const close = (e: any): void => {
+        e.preventDefault();
 
-        e.preventDefault()
-
-        saveDes(description,fullTask.index)
-
+        if (description === "") {
+            init.initFullTask({}, 0);
+        } else {
+            saveDes(description, fullTask);
+            setDescription("");
+            init.initFullTask({}, 0);
+        }
     };
-
     if (fullTask.arr?.name) {
-        // console.log(fullTask);
-
         return (
             <Container>
+                <Link to="/tasks/"></Link>
                 <h1>{fullTask.arr.name}</h1>
-                {/* <p>{fullTask.arr.nameBlock}</p>
-                <p>{fullTask.arr.date}</p>
-                <p>{fullTask.arr.description}</p> */}
-                <InputTextArea onChange={changeDescription} name="" id="" defaultValue={description}></InputTextArea>
-                <Button onClick={saveDescription}>ok</Button>
-                <Button>X</Button>
+                <p>{fullTask.arr.nameBlock}</p>
+                <InputTextArea
+                    onChange={changeDescription}
+                    placeholder="Введите текст заметки...."
+                    defaultValue={fullTask.arr.description}
+                ></InputTextArea>
+
+                <Button onClick={close} title="Закрыть">
+                    X
+                </Button>
             </Container>
         );
     } else {

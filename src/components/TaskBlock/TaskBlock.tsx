@@ -25,15 +25,17 @@ const Title = styled.h2`
 
 
 
-const TaskBlock = ({initFullTask,nameBlock, mainInput,previousArrBlock,arrBlock, initTask, title }: any): JSX.Element => {
+const TaskBlock = ({nameBlock, mainInput,previousArrBlock,arrBlock, title }: any): JSX.Element => {
    
+
+
     const blockRef = useRef(null)
 
     return (
         <Block data-nameblock={nameBlock} ref={blockRef}  >
             <Title >{title}</Title>
-            <TaskItem initFullTask={initFullTask} arrBlock={arrBlock}/>
-            <InputBlock blockRef={blockRef} mainInput={mainInput} previousArrBlock={previousArrBlock} arrBlock={arrBlock} initTask={initTask}/>
+            <TaskItem  arrBlock={arrBlock}/>
+            <InputBlock blockRef={blockRef} mainInput={mainInput} previousArrBlock={previousArrBlock} arrBlock={arrBlock} />
         </Block>
     );
 };

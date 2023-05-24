@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import { Context } from "../context";
 
 const Box = styled.div`
     display: flex;
@@ -14,10 +15,14 @@ const Task = styled.div`
     padding: 8px;
 `;
 
-const TaskItem = ({initFullTask, arrBlock }: any): JSX.Element => {
+const TaskItem = ({ arrBlock }: any): JSX.Element => {
 
+
+    const init = useContext(Context)
+
+    // console.log(init.initTask);
     const clickTask=(el:any,index:number):void=>{
-        initFullTask(el,index)
+        init.initFullTask(el,index)
     }
 
 

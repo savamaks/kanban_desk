@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import SelectTask from "./SelectTask";
+import { Context } from "../context";
+
 
 const Input = styled.input`
     border: none;
@@ -30,16 +32,19 @@ const Button = styled.button<{ bg: string; color: string }>`
 `;
 
 
-const InputBlock = ({blockRef, mainInput, previousArrBlock, arrBlock, initTask }: any): JSX.Element => {
+const InputBlock = ({blockRef, mainInput, previousArrBlock, arrBlock }: any): JSX.Element => {
     const [input, setInput] = useState("");
     const [click, setClick] = useState(false);
     const [valueOption, setValueOption] = useState("");
+    const init = useContext(Context)
 
+    //отслеживания изменения в поле ввода
     const changeInput = (e: any): void => {
         e.preventDefault();
         setInput(e.target.value);
     };
 
+    //кнопка добавления заметки в блок
     const clickButtonAdd = (e: any): void => {
         e.preventDefault();
 
@@ -47,22 +52,22 @@ const InputBlock = ({blockRef, mainInput, previousArrBlock, arrBlock, initTask }
         const date = Date.parse(new Date().toUTCString()) / 1000;
 
         if (input !== "") {
-            initTask({
+            init.initTask({
                 nameBlock:blockRef.current.dataset.nameblock,
                 date: date,
                 name: input,
-                description: "",
+                description: " ",
                 arrBlock: arrBlock,
                 previousArrBlock: previousArrBlock,
             });
             setInput("");
         } else if (valueOption !== "") {
 
-            initTask({
+            init.initTask({
                 nameBlock:blockRef.current.dataset.nameblock,
                 date: date,
                 name: valueOption,
-                description: "",
+                description: " ",
                 arrBlock: arrBlock,
                 previousArrBlock: previousArrBlock,
             });
@@ -70,6 +75,7 @@ const InputBlock = ({blockRef, mainInput, previousArrBlock, arrBlock, initTask }
         }
     };
 
+    //выбор из списка достурных задач в предыдущем блоке 
     const changeSelect = (e: any): void => {
         setValueOption(e.target.value);
     };
