@@ -1,4 +1,4 @@
-import {   useContext, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import cross from "../icons/close.svg";
 import { Link } from "react-router-dom";
@@ -45,15 +45,14 @@ const Title = styled.h1`
 `;
 
 const FullTask = (): JSX.Element => {
-    // console.log('ren full');
     const init = useContext(Context);
 
     const [description, setDescription] = useState("");
 
-    const changeDescription = (e: any):void => {
+    const changeDescription = (e: any): void => {
         setDescription(e.target.value);
     };
-
+    //при закрытии развернутой заметки текс сохраняется
     const close = (e: any): void => {
         e.preventDefault();
 
@@ -63,7 +62,6 @@ const FullTask = (): JSX.Element => {
             setDescription("");
         }
     };
-    if (init.fullTask.arr?.name) {
         return (
             <Container>
                 <Title>{init.fullTask.arr.name}</Title>
@@ -74,14 +72,12 @@ const FullTask = (): JSX.Element => {
                 ></InputTextArea>
                 <Button onClick={close}>
                     <Link style={{ textDecoration: "none" }} to="/">
-                    {"\u2716"}
+                        {"\u2716"}
                     </Link>
                 </Button>
             </Container>
         );
-    } else {
-        return <></>;
-    }
-};
+    } 
+
 
 export default FullTask;

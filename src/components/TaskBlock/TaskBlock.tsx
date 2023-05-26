@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import InputBlock from "./InputBlock";
+import InputBlock from "./InputBlock/InputBlock";
 import { useRef, useState } from "react";
 import TaskItem from "./TaskItem";
 

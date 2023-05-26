@@ -5,14 +5,14 @@ type booleanContext = {
     initFullTask:(value: object, index: number)=>void;
     saveDes:(description:string)=>void;
     fullTask:any;
-    dataMock:any
+    dataArr:any
 };
 const defaultValue: booleanContext = {
     initTask: ():void => {},
     initFullTask: ():void => {},
     saveDes:():void => {},
     fullTask:{},
-    dataMock:{}
+    dataArr:{}
 
 };
 export const Context = createContext<booleanContext>(defaultValue);

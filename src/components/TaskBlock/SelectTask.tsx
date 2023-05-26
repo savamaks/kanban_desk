@@ -19,11 +19,12 @@ const SelectTask = ({changeSelect,numberBlock}:any):JSX.Element => {
 
     const init = useContext(Context)
 
-    return (
-        <Select onChange={changeSelect} name="">
-            <Option>-Select a Task-</Option>
 
-            {init.dataMock[numberBlock-1].arrTask.map((el: any, index: number): JSX.Element => {
+    return (
+        <Select onChange={changeSelect} name="" disabled={init.dataArr[numberBlock-1]?.arrTask.length===0? true:false}>
+            <Option value="select task"></Option>
+
+            {init.dataArr[numberBlock-1]?.arrTask.map((el: any, index: number): JSX.Element => {
                 return <Option key={index}>{el.name}</Option>;
             })}
         </Select>

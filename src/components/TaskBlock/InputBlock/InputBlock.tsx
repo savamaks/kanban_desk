@@ -1,8 +1,7 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import SelectTask from "./SelectTask";
-import { Context } from "./context";
-
+import SelectTask from "../SelectTask";
+import { Context } from "../context";
 
 const Input = styled.input`
     border: none;
@@ -31,13 +30,12 @@ const Button = styled.button<{ bg: string; color: string }>`
     border-radius: 5px;
 `;
 
-
-const InputBlock = ({numberBlock,blockRef, mainInput }: any): JSX.Element => {
+const InputBlock = ({ numberBlock, blockRef, mainInput }: any): JSX.Element => {
     const [input, setInput] = useState("");
     const [click, setClick] = useState(false);
     const [valueOption, setValueOption] = useState("");
-    const init = useContext(Context)
-    // console.log(init.dataMock[numberBlock]);
+    const init = useContext(Context);
+    // console.log(init.dataArr[numberBlock]);
 
     //отслеживания изменения в поле ввода
     const changeInput = (e: any): void => {
@@ -54,39 +52,42 @@ const InputBlock = ({numberBlock,blockRef, mainInput }: any): JSX.Element => {
 
         if (input !== "") {
             init.initTask({
-                nameBlock:blockRef.current.dataset.nameblock,
-                date: date,
+                nameBlock: blockRef.current.dataset.nameblock,
+                id: date,
                 name: input,
                 description: "",
-                arrBlock: init.dataMock[numberBlock],
-                previousArrBlock: init.dataMock[numberBlock-1],
+                arrBlock: init.dataArr[numberBlock],
+                previousArrBlock: init.dataArr[numberBlock - 1],
             });
             setInput("");
         } else if (valueOption !== "") {
-
             init.initTask({
-                nameBlock:blockRef.current.dataset.nameblock,
+                nameBlock: blockRef.current.dataset.nameblock,
                 name: valueOption,
-                arrBlock: init.dataMock[numberBlock],
-                previousArrBlock: init.dataMock[numberBlock-1],
-
+                arrBlock: init.dataArr[numberBlock],
+                previousArrBlock: init.dataArr[numberBlock - 1],
             });
             setValueOption("");
         }
     };
 
-    //выбор из списка достурных задач в предыдущем блоке 
+    //выбор из списка достурных задач в предыдущем блоке
     const changeSelect = (e: any): void => {
         setValueOption(e.target.value);
     };
 
     return (
         <Form>
-    
-            {mainInput && click && <Input type="text" value={input} onChange={changeInput} placeholder="Введите заметку..." />}
+            {mainInput && click && <Input data-testid='inputTask' type="text" value={input} onChange={changeInput} placeholder="Введите заметку..." />}
 
             {!mainInput && click && <SelectTask changeSelect={changeSelect} numberBlock={numberBlock} />}
-            <Button onClick={clickButtonAdd} bg={!click ? "none" : "#0079BF"} color={!click ? "#5E6C84" : "#FFFFFF"}>
+            <Button
+                data-testid='inputTaskButton'
+                disabled={init.dataArr[numberBlock - 1]?.arrTask.length === 0 ? true : false}
+                onClick={clickButtonAdd}
+                bg={!click ? "none" : "#0079BF"}
+                color={!click ? "#5E6C84" : "#FFFFFF"}
+            >
                 {!click ? "+Add card" : "Submit"}
             </Button>
         </Form>

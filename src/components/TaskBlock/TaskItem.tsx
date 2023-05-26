@@ -25,9 +25,9 @@ const TaskItem = ({numberBlock }: any): JSX.Element => {
         init.initFullTask(el, index);
     };
 
-    const item = init.dataMock[numberBlock].arrTask.map((el: any, index: number): JSX.Element => {
+    const item = init.dataArr[numberBlock].arrTask.map((el: any, index: number): JSX.Element => {
         return (
-            <Link key={el.date} to={`/tasks/${el.date}`}>
+            <Link key={el.id} to={`/tasks/id${el.id}`}>
                 <TaskDiv
                     onClick={(): void => {
                         clickTask(el, index);
