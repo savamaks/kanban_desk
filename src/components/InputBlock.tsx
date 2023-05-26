@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import SelectTask from "./SelectTask";
-import { Context } from "../context";
+import { Context } from "./context";
 
 
 const Input = styled.input`
@@ -32,11 +32,12 @@ const Button = styled.button<{ bg: string; color: string }>`
 `;
 
 
-const InputBlock = ({blockRef, mainInput, previousArrBlock, arrBlock }: any): JSX.Element => {
+const InputBlock = ({numberBlock,blockRef, mainInput }: any): JSX.Element => {
     const [input, setInput] = useState("");
     const [click, setClick] = useState(false);
     const [valueOption, setValueOption] = useState("");
     const init = useContext(Context)
+    // console.log(init.dataMock[numberBlock]);
 
     //отслеживания изменения в поле ввода
     const changeInput = (e: any): void => {
@@ -56,20 +57,19 @@ const InputBlock = ({blockRef, mainInput, previousArrBlock, arrBlock }: any): JS
                 nameBlock:blockRef.current.dataset.nameblock,
                 date: date,
                 name: input,
-                description: " ",
-                arrBlock: arrBlock,
-                previousArrBlock: previousArrBlock,
+                description: "",
+                arrBlock: init.dataMock[numberBlock],
+                previousArrBlock: init.dataMock[numberBlock-1],
             });
             setInput("");
         } else if (valueOption !== "") {
 
             init.initTask({
                 nameBlock:blockRef.current.dataset.nameblock,
-                date: date,
                 name: valueOption,
-                description: " ",
-                arrBlock: arrBlock,
-                previousArrBlock: previousArrBlock,
+                arrBlock: init.dataMock[numberBlock],
+                previousArrBlock: init.dataMock[numberBlock-1],
+
             });
             setValueOption("");
         }
@@ -85,8 +85,7 @@ const InputBlock = ({blockRef, mainInput, previousArrBlock, arrBlock }: any): JS
     
             {mainInput && click && <Input type="text" value={input} onChange={changeInput} placeholder="Введите заметку..." />}
 
-            {!mainInput && click && <SelectTask changeSelect={changeSelect} previousArrBlock={previousArrBlock} />}
-
+            {!mainInput && click && <SelectTask changeSelect={changeSelect} numberBlock={numberBlock} />}
             <Button onClick={clickButtonAdd} bg={!click ? "none" : "#0079BF"} color={!click ? "#5E6C84" : "#FFFFFF"}>
                 {!click ? "+Add card" : "Submit"}
             </Button>

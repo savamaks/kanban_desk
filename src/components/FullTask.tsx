@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import {   useContext, useState } from "react";
 import styled from "styled-components";
 import cross from "../icons/close.svg";
 import { Link } from "react-router-dom";
@@ -23,6 +23,7 @@ const Button = styled.button`
 `;
 
 const InputTextArea = styled.textarea`
+    margin-top: 35px;
     border: none;
     width: 100%;
     height: 100%;
@@ -34,41 +35,22 @@ const InputTextArea = styled.textarea`
     resize: none;
 `;
 
-const arr = [
-    {
-        title: "backlog",
-        issues: [
-            {
-                id: "12345",
-                name: "Sprint bugfix",
-                description: "",
-            },
-        ],
-    },
-    {
-        title: "ready",
-        issues: [
-            {
-                id: "1",
-                name: "S",
-                description: "",
-            },
-        ],
-    }
-];
+const Title = styled.h1`
+    margin: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    color: #000000;
+`;
 
-
-
-
-
-
-const FullTask = ({ fullTask, saveDes }: any): JSX.Element => {
-    // console.log(fullTask);
+const FullTask = (): JSX.Element => {
+    // console.log('ren full');
     const init = useContext(Context);
 
     const [description, setDescription] = useState("");
 
-    const changeDescription = (e: any) => {
+    const changeDescription = (e: any):void => {
         setDescription(e.target.value);
     };
 
@@ -76,27 +58,24 @@ const FullTask = ({ fullTask, saveDes }: any): JSX.Element => {
         e.preventDefault();
 
         if (description === "") {
-            init.initFullTask({}, 0);
         } else {
-            saveDes(description, fullTask);
+            init.saveDes(description);
             setDescription("");
-            init.initFullTask({}, 0);
         }
     };
-    if (fullTask.arr?.name) {
+    if (init.fullTask.arr?.name) {
         return (
             <Container>
-                <Link to="/tasks/"></Link>
-                <h1>{fullTask.arr.name}</h1>
-                <p>{fullTask.arr.nameBlock}</p>
+                <Title>{init.fullTask.arr.name}</Title>
                 <InputTextArea
                     onChange={changeDescription}
                     placeholder="Введите текст заметки...."
-                    defaultValue={fullTask.arr.description}
+                    defaultValue={init.fullTask.arr.description}
                 ></InputTextArea>
-
-                <Button onClick={close} title="Закрыть">
-                    X
+                <Button onClick={close}>
+                    <Link style={{ textDecoration: "none" }} to="/">
+                    {"\u2716"}
+                    </Link>
                 </Button>
             </Container>
         );

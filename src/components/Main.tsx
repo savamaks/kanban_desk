@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import TaskBlock from "./TaskBlock/TaskBlock";
 import { useEffect, useState } from "react";
 import FullTask from "./FullTask";
 import { Routes, Route } from "react-router-dom";
-import {Context} from "./context";
+import { Context } from "./context";
+import ContainerBlock from "./ContainerBlock";
 
 const MainContainer = styled.section`
     grid-area: main;
@@ -14,116 +14,95 @@ const MainContainer = styled.section`
     padding: 20px 26px;
 `;
 
-const Container = styled.div`
-    width: 100%;
-    background: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-`;
 
-const arrBacklog: Array<any> = [];
-const arrReady: Array<object> = [];
-const arrInProgress: Array<object> = [];
-const arrFinished: Array<object> = [];
+let dataMock: any = [
+    {
+        title: "Backlog",
+        arrTask: [],
+    },
+    {
+        title: "Ready",
+        arrTask: [],
+    },
+    {
+        title: "InProgress",
+        arrTask: [],
+    },
+    {
+        title: "Finished",
+        arrTask: [],
+    },
+];
+const arrMemory = () => {
+    if (localStorage.length === 0) return;
+    let arrBacklogNew: any = localStorage.getItem("dataMock");
+    dataMock = JSON.parse(arrBacklogNew);
+    
+};
+arrMemory();
 
-const Main = (): JSX.Element => {
+const Main = ({ amoutTask }: any): JSX.Element => {
     const [task, setTask] = useState(false);
     const [fullTask, setFullTask]: any = useState({});
+// console.log('render main');
 
     //добавление нвой заметки и перемещение по блокам
-    const initTask = ({ nameBlock, date, name, description, arrBlock, previousArrBlock }: any) => {
+    const initTask = ({ nameBlock, date, name, description, arrBlock, previousArrBlock }: any): void => {
         let task: any = [];
 
-        previousArrBlock?.forEach((el: any, index: number): void => {
+        previousArrBlock?.arrTask?.forEach((el: any, index: number): void => {
             if (el.name === name) {
-                task = previousArrBlock.splice(index, 1);
+                task = previousArrBlock.arrTask.splice(index, 1);
             }
         });
         // console.log(task[0]);
 
-        arrBlock.push({
+        arrBlock.arrTask.push({
             nameBlock: nameBlock,
             date: task[0] ? task[0].date : date,
             name: task[0] ? task[0].name : name,
             description: task[0] ? task[0].description : description,
         });
-        // console.log(arrReady);
 
         setTask((prev) => !prev);
+        memory();
     };
 
     // инициализация развертывания описания заметки
     const initFullTask = (value: object, index: number): void => {
         setFullTask({ arr: value, index: index });
     };
+    const memory = () => {
+        localStorage.setItem("dataMock", JSON.stringify(dataMock));
+    };
 
     //сохраняет заметку с новым описанием
     const saveDes = (description: string): void => {
-        let newEl = { nameBlock: fullTask.arr.nameBlock, date: fullTask.arr.date, name: fullTask.arr.name, description: description };
-
-        if (fullTask.arr.nameBlock === "Backlog") {
-            arrBacklog.splice(fullTask.index, 1, newEl);
-        } else if (fullTask.arr.nameBlock === "Ready") {
-            arrReady.splice(fullTask.index, 1, newEl);
-        } else if (fullTask.arr.nameBlock === "InProgress") {
-            arrInProgress.splice(fullTask.index, 1, newEl);
-        } else if (fullTask.arr.nameBlock === "Finished") {
-            arrFinished.splice(fullTask.index, 1, newEl);
-        }
+        let newElement = { nameBlock: fullTask.arr.nameBlock, date: fullTask.arr.date, name: fullTask.arr.name, description: description };
+        dataMock.map((el: any, index: number) => {
+            if (el.title == fullTask.arr.nameBlock) {
+                el.arrTask.splice(fullTask.index, 1, newElement);
+            }
+        });
+        memory();
     };
 
+    useEffect((): void => {
+        amoutTask(dataMock[0].arrTask.length+dataMock[1].arrTask.length+dataMock[2].arrTask.length, dataMock[3].arrTask.length);
+    }, [task]);
+
+    
+
     return (
-        <Context.Provider value={{initTask,initFullTask}}>
+        <Context.Provider value={{ initTask, initFullTask, saveDes, fullTask,dataMock }}>
             <MainContainer>
-                <Container>
-                    <TaskBlock
-                        nameBlock={"Backlog"}
-                        mainInput={true}
-                        arrBlock={arrBacklog}
-                        title={"Backlog"}
-                    />
-                    <TaskBlock
-                        nameBlock={"Ready"}
-                        mainInput={false}
-                        previousArrBlock={arrBacklog}
-                        arrBlock={arrReady}
-                        title={"Ready"}
-                    />
-                    <TaskBlock
-                        nameBlock={"InProgress"}
-                        mainInput={false}
-                        previousArrBlock={arrReady}
-                        arrBlock={arrInProgress}
-                        title={"In Progress"}
-                    />
-                    <TaskBlock
-                        nameBlock={"Finished"}
-                        mainInput={false}
-                        previousArrBlock={arrInProgress}
-                        arrBlock={arrFinished}
-                        title={"Finished"}
-                    />
-                </Container>
-                <FullTask  fullTask={fullTask} saveDes={saveDes} />
+                <Routes>
+                    <Route path="/" Component={ContainerBlock} />
+                    <Route path={`/tasks/${fullTask.arr?.date}`} Component={FullTask} />
+                </Routes>
             </MainContainer>
         </Context.Provider>
     );
 };
 export default Main;
 
-// const memory =()=>{
-//     localStorage.setItem("arrBacklog", JSON.stringify(arrBacklog));
-//     localStorage.setItem("arrReady", JSON.stringify(arrReady));
-//     localStorage.setItem("arrInProgress", JSON.stringify(arrInProgress));
-//     localStorage.setItem("arrFinished", JSON.stringify(arrFinished));
-
-// }
-
-// useEffect(() => {
-//     let r: any = localStorage.getItem("Backlog");
-//     let g = JSON.parse(r);
-//     g.map((el: any) => {
-//         initTaskBacklog({id:el.id, name:el.name, description:el.description })
-//     });
-// }, []);

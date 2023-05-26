@@ -22,12 +22,12 @@ const Title = styled.h2`
     line-height: 21px;
     color: #ffffff;
 `;
-const Footer = (): JSX.Element => {
+const Footer = ({amountActive,amountFinished}:any): JSX.Element => {
     return (
         <Container>
             <TasksCount>
-                <Title>Active tasks: </Title>
-                <Title>Finished tasks: </Title>
+                <Title>Active tasks: {amountActive} </Title>
+                <Title>Finished tasks: {amountFinished}</Title>
             </TasksCount>
             <UserName>
                 <Title>Kanban board by </Title>

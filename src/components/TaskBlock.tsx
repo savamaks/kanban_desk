@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import InputBlock from "./Input";
+import InputBlock from "./InputBlock";
 import { useRef, useState } from "react";
 import TaskItem from "./TaskItem";
 
-const Block = styled.div`
+const BlockTask = styled.div`
     display: flex;
     font-family: inherit;
     flex-direction: column;
@@ -25,18 +25,17 @@ const Title = styled.h2`
 
 
 
-const TaskBlock = ({nameBlock, mainInput,previousArrBlock,arrBlock, title }: any): JSX.Element => {
-   
+const TaskBlock = ({numberBlock,nameBlock, mainInput, title }: any): JSX.Element => {
 
 
     const blockRef = useRef(null)
 
     return (
-        <Block data-nameblock={nameBlock} ref={blockRef}  >
+        <BlockTask data-nameblock={nameBlock} ref={blockRef}  >
             <Title >{title}</Title>
-            <TaskItem  arrBlock={arrBlock}/>
-            <InputBlock blockRef={blockRef} mainInput={mainInput} previousArrBlock={previousArrBlock} arrBlock={arrBlock} />
-        </Block>
+            <TaskItem numberBlock={numberBlock} />
+            <InputBlock numberBlock={numberBlock} blockRef={blockRef} mainInput={mainInput} />
+        </BlockTask>
     );
 };
 export default TaskBlock;

@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Context } from "./context";
+import { useContext } from "react";
 
 const Select = styled.select`
     width: 100%;
@@ -13,12 +15,15 @@ const Option = styled.option`
 `;
 
 
-const SelectTask = ({changeSelect,previousArrBlock}:any) => {
+const SelectTask = ({changeSelect,numberBlock}:any):JSX.Element => {
+
+    const init = useContext(Context)
+
     return (
         <Select onChange={changeSelect} name="">
             <Option>-Select a Task-</Option>
 
-            {previousArrBlock.map((el: any, index: number): JSX.Element => {
+            {init.dataMock[numberBlock-1].arrTask.map((el: any, index: number): JSX.Element => {
                 return <Option key={index}>{el.name}</Option>;
             })}
         </Select>

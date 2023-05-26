@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-
+import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -15,16 +15,32 @@ const Container = styled.div`
     margin: 0 auto;
     grid-template: minmax(55px, auto) 1fr minmax(70px, auto) / 1fr;
     grid-template-areas: "header" "main" "footer";
+    a{
+        text-decoration: none;
+        color: inherit;
+        &:hover{
+            color: inherit;
+        }
+    }
 `;
 
+
 const App = (): JSX.Element => {
+    const [amountActive, setAmountActive] = useState(0);
+    const [amountFinished, setAmountFinished] = useState(0);
+
+    const amoutTask = (active: number, finished: number): void => {
+        setAmountActive(active);
+        setAmountFinished(finished);
+    };
 
     return (
         <BrowserRouter>
             <Container>
-            <Header />
-                <Main />
-                <Footer />
+                <Header />
+
+                <Main amoutTask={amoutTask} />
+                <Footer amountActive={amountActive} amountFinished={amountFinished} />
             </Container>
         </BrowserRouter>
     );
