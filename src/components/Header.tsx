@@ -4,7 +4,7 @@ import arrowButton from "../icons/Vector.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const ContainerHeader = styled.section`
+const ContainerHeader = styled.header`
     position: relative;
     grid-area: header;
     background: #0067a3;
@@ -78,7 +78,7 @@ const Header = (): JSX.Element => {
     };
 
     return (
-        <ContainerHeader>
+        <ContainerHeader data-testid='header'>
             <Title>Awesome Kanban Board</Title>
 
             <BoxAvatar>

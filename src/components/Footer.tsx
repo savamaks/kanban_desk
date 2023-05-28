@@ -1,5 +1,5 @@
 import styled from "styled-components";
-const Container = styled.section`
+const Container = styled.footer`
     grid-area: footer;
     background: #0067a3;
     display: flex;
@@ -24,7 +24,7 @@ const Title = styled.h2`
 `;
 const Footer = ({amountActive,amountFinished}:any): JSX.Element => {
     return (
-        <Container>
+        <Container data-testid='footer'>
             <TasksCount>
                 <Title>Active tasks: {amountActive} </Title>
                 <Title>Finished tasks: {amountFinished}</Title>

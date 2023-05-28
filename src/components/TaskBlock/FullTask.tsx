@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import cross from "../icons/close.svg";
+import cross from "../icons/closeFullTask.svg";
 import { Link } from "react-router-dom";
 import { Context } from "./context";
 
@@ -44,7 +44,7 @@ const Title = styled.h1`
     color: #000000;
 `;
 
-const FullTask = (): JSX.Element => {
+const FullTask = ({element,indexElement}:any): JSX.Element => {
     const init = useContext(Context);
 
     const [description, setDescription] = useState("");
@@ -53,24 +53,25 @@ const FullTask = (): JSX.Element => {
         setDescription(e.target.value);
     };
     //при закрытии развернутой заметки текс сохраняется
-    const close = (e: any): void => {
+    const closeFullTask = (e: any): void => {
+        console.log(element);
         e.preventDefault();
 
         if (description === "") {
         } else {
-            init.saveDes(description);
+            init.saveNewTask(description,element,indexElement);
             setDescription("");
         }
     };
         return (
             <Container>
-                <Title>{init.fullTask.arr.name}</Title>
+                <Title>{element.name}</Title>
                 <InputTextArea
                     onChange={changeDescription}
                     placeholder="Введите текст заметки...."
-                    defaultValue={init.fullTask.arr.description}
+                    defaultValue={element.description}
                 ></InputTextArea>
-                <Button onClick={close}>
+                <Button onClick={closeFullTask}>
                     <Link style={{ textDecoration: "none" }} to="/">
                         {"\u2716"}
                     </Link>

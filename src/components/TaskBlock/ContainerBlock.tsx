@@ -18,8 +18,8 @@ const Container = styled.div`
 
 
 const ContainerBlock = (): JSX.Element => (
-    <Container>
-        <TaskBlock numberBlock={0} nameBlock={"Backlog"} mainInput={true} title={"Backlog"} />
+    <Container data-testid='taskblock'>
+        <TaskBlock  numberBlock={0} nameBlock={"Backlog"} mainInput={true} title={"Backlog"} />
         <TaskBlock numberBlock={1} nameBlock={"Ready"} mainInput={false} title={"Ready"} />
         <TaskBlock numberBlock={2} nameBlock={"InProgress"} mainInput={false}  title={"In Progress"} />
         <TaskBlock numberBlock={3} nameBlock={"Finished"} mainInput={false} title={"Finished"} />

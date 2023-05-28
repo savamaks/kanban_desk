@@ -31,7 +31,7 @@ const TaskBlock = ({numberBlock,nameBlock, mainInput, title }: any): JSX.Element
     const blockRef = useRef(null)
 
     return (
-        <BlockTask data-nameblock={nameBlock} ref={blockRef}  >
+        <BlockTask  data-nameblock={nameBlock} ref={blockRef}  >
             <Title >{title}</Title>
             <TaskItem numberBlock={numberBlock} />
             <InputBlock numberBlock={numberBlock} blockRef={blockRef} mainInput={mainInput} />

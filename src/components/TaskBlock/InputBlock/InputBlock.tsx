@@ -20,11 +20,12 @@ const Form = styled.form`
     align-items: start;
     gap: 15px;
 `;
-const Button = styled.button<{ bg: string; color: string }>`
+const Button = styled.button<{ cursor: string, bg: string; color: string }>`
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 21px;
+    cursor: ${(props) => props.cursor};
     color: ${(props) => props.color};
     background: ${(props) => props.bg};
     border-radius: 5px;
@@ -85,6 +86,7 @@ const InputBlock = ({ numberBlock, blockRef, mainInput }: any): JSX.Element => {
                 data-testid='inputTaskButton'
                 disabled={init.dataArr[numberBlock - 1]?.arrTask.length === 0 ? true : false}
                 onClick={clickButtonAdd}
+                cursor={init.dataArr[numberBlock - 1]?.arrTask.length === 0 ? 'auto' : 'pointer'}
                 bg={!click ? "none" : "#0079BF"}
                 color={!click ? "#5E6C84" : "#FFFFFF"}
             >

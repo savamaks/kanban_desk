@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Context } from "./context";
-import { useContext } from "react";
+import { useContext,useState } from "react";
 
 const Select = styled.select`
     width: 100%;
@@ -18,11 +18,12 @@ const Option = styled.option`
 const SelectTask = ({changeSelect,numberBlock}:any):JSX.Element => {
 
     const init = useContext(Context)
+    const [stateButton,setStateButton]=useState(false)
 
 
     return (
-        <Select onChange={changeSelect} name="" disabled={init.dataArr[numberBlock-1]?.arrTask.length===0? true:false}>
-            <Option value="select task"></Option>
+        <Select onChange={changeSelect} name="" >
+            <Option></Option>
 
             {init.dataArr[numberBlock-1]?.arrTask.map((el: any, index: number): JSX.Element => {
                 return <Option key={index}>{el.name}</Option>;
