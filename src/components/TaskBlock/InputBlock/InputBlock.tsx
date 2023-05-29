@@ -31,12 +31,16 @@ const Button = styled.button<{ cursor: string, bg: string; color: string }>`
     border-radius: 5px;
 `;
 
-const InputBlock = ({ numberBlock, blockRef, mainInput }: any): JSX.Element => {
+interface InputBlock {
+    numberBlock:number, blockRef:any, mainInput:boolean
+}
+
+
+const InputBlock = ({ numberBlock, blockRef, mainInput }: InputBlock): JSX.Element => {
     const [input, setInput] = useState("");
     const [click, setClick] = useState(false);
     const [valueOption, setValueOption] = useState("");
-    const init = useContext(Context);
-    // console.log(init.dataArr[numberBlock]);
+    const {initTask,dataArr} = useContext(Context);
 
     //отслеживания изменения в поле ввода
     const changeInput = (e: any): void => {
@@ -52,21 +56,21 @@ const InputBlock = ({ numberBlock, blockRef, mainInput }: any): JSX.Element => {
         const date = Date.parse(new Date().toUTCString()) / 1000;
 
         if (input !== "") {
-            init.initTask({
+            initTask({
                 nameBlock: blockRef.current.dataset.nameblock,
                 id: date,
                 name: input,
                 description: "",
-                arrBlock: init.dataArr[numberBlock],
-                previousArrBlock: init.dataArr[numberBlock - 1],
+                arrBlock: dataArr[numberBlock],
+                previousArrBlock: dataArr[numberBlock - 1],
             });
             setInput("");
-        } else if (valueOption !== "") {
-            init.initTask({
+        } else if (valueOption !== ""&&valueOption !== "one") {
+            initTask({
                 nameBlock: blockRef.current.dataset.nameblock,
                 name: valueOption,
-                arrBlock: init.dataArr[numberBlock],
-                previousArrBlock: init.dataArr[numberBlock - 1],
+                arrBlock: dataArr[numberBlock],
+                previousArrBlock: dataArr[numberBlock - 1],
             });
             setValueOption("");
         }
@@ -84,9 +88,9 @@ const InputBlock = ({ numberBlock, blockRef, mainInput }: any): JSX.Element => {
             {!mainInput && click && <SelectTask changeSelect={changeSelect} numberBlock={numberBlock} />}
             <Button
                 data-testid='inputTaskButton'
-                disabled={init.dataArr[numberBlock - 1]?.arrTask.length === 0 ? true : false}
+                disabled={dataArr[numberBlock - 1]?.arrTask.length === 0 ? true : false}
                 onClick={clickButtonAdd}
-                cursor={init.dataArr[numberBlock - 1]?.arrTask.length === 0 ? 'auto' : 'pointer'}
+                cursor={dataArr[numberBlock - 1]?.arrTask.length === 0 ? 'auto' : 'pointer'}
                 bg={!click ? "none" : "#0079BF"}
                 color={!click ? "#5E6C84" : "#FFFFFF"}
             >

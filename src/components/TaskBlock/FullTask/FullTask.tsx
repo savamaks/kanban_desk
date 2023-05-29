@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import cross from "../icons/closeFullTask.svg";
 import { Link } from "react-router-dom";
-import { Context } from "./context";
+import { Context } from "../context";
+import { FullTaskType} from "../../../type/type";
 
 const Container = styled.div`
     position: relative;
@@ -44,9 +45,10 @@ const Title = styled.h1`
     color: #000000;
 `;
 
-const FullTask = ({element,indexElement}:any): JSX.Element => {
-    const init = useContext(Context);
 
+
+const FullTask = ({ element, indexElement }: FullTaskType): JSX.Element => {
+    const {saveNewTask} = useContext(Context);
     const [description, setDescription] = useState("");
 
     const changeDescription = (e: any): void => {
@@ -54,31 +56,27 @@ const FullTask = ({element,indexElement}:any): JSX.Element => {
     };
     //при закрытии развернутой заметки текс сохраняется
     const closeFullTask = (e: any): void => {
-        console.log(element);
         e.preventDefault();
 
         if (description === "") {
+        } else if (saveNewTask) {
+            saveNewTask(description, element, indexElement);
+            setDescription("");
         } else {
-            init.saveNewTask(description,element,indexElement);
             setDescription("");
         }
     };
-        return (
-            <Container>
-                <Title>{element.name}</Title>
-                <InputTextArea
-                    onChange={changeDescription}
-                    placeholder="Введите текст заметки...."
-                    defaultValue={element.description}
-                ></InputTextArea>
-                <Button onClick={closeFullTask}>
-                    <Link style={{ textDecoration: "none" }} to="/">
-                        {"\u2716"}
-                    </Link>
-                </Button>
-            </Container>
-        );
-    } 
-
+    return (
+        <Container>
+            <Title>{element.name}</Title>
+            <InputTextArea onChange={changeDescription} placeholder="Введите текст заметки...." defaultValue={element.description}></InputTextArea>
+            <Button onClick={closeFullTask}>
+                <Link style={{ textDecoration: "none" }} to="/">
+                    {"\u2716"}
+                </Link>
+            </Button>
+        </Container>
+    );
+};
 
 export default FullTask;

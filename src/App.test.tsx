@@ -1,16 +1,14 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const headerElement =screen.getByTestId('header');
-  const mainElement = screen.getByTestId('main');
-  const footerElement =screen.getByTestId('footer');
+describe("app", () => {
+    it("components render ",  () => {
+        const { getByText, getByTestId } = render(<App />);
 
-  expect(headerElement).toBeInTheDocument();
-  expect(mainElement).toBeInTheDocument();
-  expect(footerElement).toBeInTheDocument();
-
-
+        
+        expect(screen.getByText(/Awesome Kanban Board/i)).toBeInTheDocument();
+        expect(screen.getByTestId("main")).toBeInTheDocument();
+        expect(screen.getByTestId("footer")).toBeInTheDocument();
+    });
 });

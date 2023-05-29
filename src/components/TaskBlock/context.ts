@@ -1,13 +1,13 @@
 import  {createContext}  from "react";
 
-type booleanContext = {
+type ContextType = {
     initTask:({}:any)=>void;
     initFullTask:(value: object, index: number)=>void;
     saveNewTask:(description:string,el:any,indexElement:number)=>void;
     fullTask:any;
     dataArr:any
 };
-const defaultValue: booleanContext = {
+export const defaultValue: ContextType = {
     initTask: ():void => {},
     initFullTask: ():void => {},
     saveNewTask:():void => {},
@@ -15,4 +15,4 @@ const defaultValue: booleanContext = {
     dataArr:{}
 
 };
-export const Context = createContext<booleanContext>(defaultValue);
+export const Context = createContext<ContextType>(defaultValue);

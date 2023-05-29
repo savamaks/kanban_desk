@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Context } from "./context";
-import { useContext,useState } from "react";
+import { useContext, useState } from "react";
+import { SelectTaskType } from "../../type/type";
 
 const Select = styled.select`
     width: 100%;
@@ -10,22 +11,18 @@ const Select = styled.select`
     line-height: 21px;
     color: #000000;
 `;
-const Option = styled.option`
-
-`;
+const Option = styled.option``;
 
 
-const SelectTask = ({changeSelect,numberBlock}:any):JSX.Element => {
 
-    const init = useContext(Context)
-    const [stateButton,setStateButton]=useState(false)
-
+const SelectTask = ({ changeSelect, numberBlock }: SelectTaskType): JSX.Element => {
+    const {dataArr} = useContext(Context);
 
     return (
-        <Select onChange={changeSelect} name="" >
-            <Option></Option>
+        <Select onChange={changeSelect} name="">
+            <Option value="one">-Select a Task-</Option>
 
-            {init.dataArr[numberBlock-1]?.arrTask.map((el: any, index: number): JSX.Element => {
+            {dataArr[numberBlock - 1]?.arrTask.map((el: any, index: number): JSX.Element => {
                 return <Option key={index}>{el.name}</Option>;
             })}
         </Select>

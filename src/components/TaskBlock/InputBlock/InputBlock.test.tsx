@@ -1,25 +1,47 @@
-import { fireEvent, render, queryByText, screen, getByTestId } from "@testing-library/react";
+import { getByRole, render, screen } from "@testing-library/react";
 import InputBlock from "./InputBlock";
 import userEvent from "@testing-library/user-event";
 
-// describe("input", function () {
-//     it("", function () {
-//         const onSubmit = jest.fn();
-//         const { getByTestId } = render(<InputBlock onSubmit={onSubmit} />);
+describe("InputBlock", () => {
+    it("проверка кнопки и появления поля ввода", () => {
+        const { getByText } = render(<InputBlock numberBlock={0} blockRef={null} mainInput={true} />);
 
-//         //извлечение инпут
-// const inputTask = getByTestId('inputTask');
+        //нашли кнопку +Add card и нажали
+        const buttonAddCard = getByText("+Add card");
+        expect(buttonAddCard).toBeInTheDocument();
+        userEvent.click(buttonAddCard);
 
-//          //извлечение кнопки
-//          const inputTaskButton = getByTestId("inputTaskButton")
-//          expect(inputTaskButton).toBeEnabled()
-//          userEvent.click(inputTaskButton)
-        
-//      });
-//  });
-test("Error element: not to be in the component by default", async () => {
-    render(<InputBlock />);
-    expect(screen.getByText("+Add card")).toBeInTheDocument();
-    userEvent.click(screen.getByText("+Add card"));
-    
+        //нашли поле ввода после того как кнопка нажата
+        const inputTask = screen.getByPlaceholderText("Введите заметку...");
+
+        expect(inputTask).toBeEnabled();
+
+        userEvent.type(inputTask, "");
+
+        //нашли кнопку Submit и нажали
+        const buttonSubmit = getByText("Submit");
+        expect(buttonSubmit).toBeInTheDocument();
+
+        userEvent.click(buttonSubmit);
+    });
+
+    it("проверка кнопки и появления меню опций", () => {
+        const { getByText, getByRole } = render(<InputBlock numberBlock={0} blockRef={null} mainInput={false} />);
+
+        //нашли кнопку +Add card и нажали
+        const buttonAddCard = getByText("+Add card");
+        expect(buttonAddCard).toBeInTheDocument();
+        userEvent.click(buttonAddCard);
+
+        //в списке выбрали элемент
+        userEvent.selectOptions(getByRole("combobox"), "one");
+        const t: any = getByText("-Select a Task-");
+        expect(t.selected).toBeTruthy();
+
+        //нашли кнопку Submit и нажали
+        const buttonSubmit = getByText("Submit");
+        expect(buttonSubmit).toBeInTheDocument();
+
+        userEvent.click(buttonSubmit);
+    });
 });

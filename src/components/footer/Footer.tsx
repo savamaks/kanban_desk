@@ -1,3 +1,4 @@
+import { type } from "os";
 import styled from "styled-components";
 const Container = styled.footer`
     grid-area: footer;
@@ -22,9 +23,14 @@ const Title = styled.h2`
     line-height: 21px;
     color: #ffffff;
 `;
-const Footer = ({amountActive,amountFinished}:any): JSX.Element => {
+
+interface Footer  {
+    amountActive: number;
+    amountFinished: number;
+};
+const Footer = ({ amountActive=0, amountFinished=0 }: any): JSX.Element => {
     return (
-        <Container data-testid='footer'>
+        <Container data-testid="footer">
             <TasksCount>
                 <Title>Active tasks: {amountActive} </Title>
                 <Title>Finished tasks: {amountFinished}</Title>
