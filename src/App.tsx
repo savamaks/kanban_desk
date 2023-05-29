@@ -26,10 +26,8 @@ const ContainerApp = styled.div`
 `;
 
 const App = (): JSX.Element => {
-    const [amountFinished, setAmountFinished] = useState(0);
-    const [task, setTask] = useState(false);
+    const [task, setTask] = useState<boolean>(false);
     const [fullTask, setFullTask]: any = useState({});
-
     const [dataArr, setDataArr] = useState<DataArrType>([
         {
             title: "Backlog",
@@ -48,11 +46,11 @@ const App = (): JSX.Element => {
             arrTask: [],
         },
     ]);
-    const [amountActive, setAmountActive] = useState([
+    const [amountActive, setAmountActive] = useState<[number,number]>([
         dataArr[0].arrTask.length + dataArr[1].arrTask.length + dataArr[2].arrTask.length,
         dataArr[3].arrTask.length,
     ]);
-
+    //проверка есть ли в local storage сохраненные задачи
     const arrMemory = () => {
         if (localStorage.length === 0) return;
         let dataArrLocalMemory: any = localStorage.getItem("dataArr");
@@ -99,9 +97,12 @@ const App = (): JSX.Element => {
     const initFullTask = (value: object, index: number): void => {
         setFullTask({ arr: value, index: index });
     };
+
+    //запуск проверки local storage
     useEffect(() => {
         arrMemory();
     }, []);
+
 
     useEffect((): void => {
         setAmountActive([dataArr[0].arrTask.length + dataArr[1].arrTask.length + dataArr[2].arrTask.length, dataArr[3].arrTask.length]);

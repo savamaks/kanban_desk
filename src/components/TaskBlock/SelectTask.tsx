@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Context } from "./context";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { SelectTaskType } from "../../type/type";
 
 const Select = styled.select`
