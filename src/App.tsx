@@ -111,13 +111,11 @@ const App = (): JSX.Element => {
 
     return (
         <ContainerApp>
-            <BrowserRouter>
                 <Context.Provider value={{ initTask, initFullTask, saveNewTask, fullTask, dataArr }}>
                     <Header />
                     <Main dataArr={dataArr} />
                     <Footer amountActive={amountActive[0]} amountFinished={amountActive[1]} />
                 </Context.Provider>
-            </BrowserRouter>
         </ContainerApp>
     );
 };
