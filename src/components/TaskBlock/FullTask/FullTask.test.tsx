@@ -11,7 +11,6 @@ describe("FullTask", () => {
         const { getByText } = render(<FullTask element={taskElement} indexElement={0} />);
 
         expect(getByText("task")).toBeInTheDocument()
-       userEvent.click(getByText(/\u2716/i))
 
     });
 });

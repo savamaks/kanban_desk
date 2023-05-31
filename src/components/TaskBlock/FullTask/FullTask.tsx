@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
-import styled from "styled-components";
-import cross from "../icons/closeFullTask.svg";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { Context } from "../context";
-import { FullTaskType} from "../../../type/type";
+import { FullTaskType } from "../../../type/type";
+import { fadeIn,swing } from "react-animations";
 
 const Container = styled.div`
+    animation: 0.5s ${keyframes`${fadeIn}`}  ;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -14,6 +15,8 @@ const Container = styled.div`
     width: 100%;
     height: 100%;
     padding: 22px 28px;
+
+
 `;
 const Button = styled.button`
     position: absolute;
@@ -21,6 +24,9 @@ const Button = styled.button`
     width: max-content;
     right: 20px;
     top: 20px;
+    &:hover{
+       animation:1s ${keyframes`${swing}`}  infinite ;
+    }
 `;
 
 const InputTextArea = styled.textarea`
@@ -37,6 +43,7 @@ const InputTextArea = styled.textarea`
 `;
 
 const Title = styled.h1`
+
     margin: 0;
     font-style: normal;
     font-weight: 400;
@@ -45,10 +52,8 @@ const Title = styled.h1`
     color: #000000;
 `;
 
-
-
 const FullTask = ({ element, indexElement }: FullTaskType): JSX.Element => {
-    const {saveNewTask} = useContext(Context);
+    const { saveNewTask } = useContext(Context);
     const [description, setDescription] = useState("");
 
     const changeDescription = (e: any): void => {

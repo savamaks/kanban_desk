@@ -1,5 +1,6 @@
 import TaskBlock from "./TaskBlock";
-import styled from "styled-components";
+import styled,{keyframes} from "styled-components";
+import { fadeIn } from "react-animations";
 
 
 const Container = styled.div`
@@ -10,6 +11,8 @@ const Container = styled.div`
     gap: 15px;
     align-items: start;
     flex-wrap: wrap;
+    animation: 0.5s ${keyframes`${fadeIn}`} ;
+
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: center;

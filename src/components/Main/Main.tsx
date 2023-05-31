@@ -1,9 +1,9 @@
 import styled from "styled-components";
+
 import FullTask from "../TaskBlock/FullTask/FullTask";
 import { Routes, Route } from "react-router-dom";
 import ContainerBlock from "../TaskBlock/ContainerBlock";
 import { ElementArr, MainType } from "../../type/type";
-import path from "path";
 
 const MainContainer = styled.main`
     grid-area: main;
@@ -19,8 +19,6 @@ const Main = ({  dataArr }: MainType): JSX.Element => {
     
     return (
         <MainContainer data-testid="main">
-
-        
             <Routes>
                 <Route path="/" element={<ContainerBlock />} />
                 {dataArr.map((taskBlock: any, index: number) => {

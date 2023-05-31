@@ -23,7 +23,7 @@ const SelectTask = ({ changeSelect, numberBlock }: SelectTaskType): JSX.Element 
             <Option value="one">-Select a Task-</Option>
 
             {dataArr[numberBlock - 1]?.arrTask.map((el: any, index: number): JSX.Element => {
-                return <Option key={index}>{el.name}</Option>;
+                return <Option  value={el.name} key={index}>{el.name}</Option>;
             })}
         </Select>
     );

@@ -20,7 +20,7 @@ const Form = styled.form`
     align-items: start;
     gap: 15px;
 `;
-const Button = styled.button<{ cursor: string, bg: string; color: string }>`
+const Button = styled.button<{ cursor: string; bg: string; color: string }>`
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -29,18 +29,26 @@ const Button = styled.button<{ cursor: string, bg: string; color: string }>`
     color: ${(props) => props.color};
     background: ${(props) => props.bg};
     border-radius: 5px;
+    transition: all 0.2s ease;
+    &:hover {
+        &:enabled {
+            color: #0079bf;
+            transform: scale(1.02);
+        }
+    }
 `;
 
 interface InputBlock {
-    numberBlock:number, blockRef:any, mainInput:boolean
+    numberBlock: number;
+    blockRef: any;
+    mainInput: boolean;
 }
-
 
 const InputBlock = ({ numberBlock, blockRef, mainInput }: InputBlock): JSX.Element => {
     const [input, setInput] = useState("");
     const [click, setClick] = useState(false);
     const [valueOption, setValueOption] = useState("");
-    const {initTask,dataArr} = useContext(Context);
+    const { initTask, dataArr } = useContext(Context);
 
     //отслеживания изменения в поле ввода
     const changeInput = (e: any): void => {
@@ -65,7 +73,7 @@ const InputBlock = ({ numberBlock, blockRef, mainInput }: InputBlock): JSX.Eleme
                 previousArrBlock: dataArr[numberBlock - 1],
             });
             setInput("");
-        } else if (valueOption !== ""&&valueOption !== "one") {
+        } else if (valueOption !== "" && valueOption !== "one") {
             initTask({
                 nameBlock: blockRef.current.dataset.nameblock,
                 name: valueOption,
@@ -83,14 +91,16 @@ const InputBlock = ({ numberBlock, blockRef, mainInput }: InputBlock): JSX.Eleme
 
     return (
         <Form>
-            {mainInput && click && <Input data-testid='inputTask' type="text" value={input} onChange={changeInput} placeholder="Введите заметку..." />}
+            {mainInput && click && (
+                <Input data-testid="inputTask" type="text" value={input} onChange={changeInput} placeholder="Введите заметку..." />
+            )}
 
             {!mainInput && click && <SelectTask changeSelect={changeSelect} numberBlock={numberBlock} />}
             <Button
-                data-testid='inputTaskButton'
+                data-testid="inputTaskButton"
                 disabled={dataArr[numberBlock - 1]?.arrTask.length === 0 ? true : false}
                 onClick={clickButtonAdd}
-                cursor={dataArr[numberBlock - 1]?.arrTask.length === 0 ? 'auto' : 'pointer'}
+                cursor={dataArr[numberBlock - 1]?.arrTask.length === 0 ? "auto" : "pointer"}
                 bg={!click ? "none" : "#0079BF"}
                 color={!click ? "#5E6C84" : "#FFFFFF"}
             >

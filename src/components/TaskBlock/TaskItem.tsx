@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import { Context } from "./context";
 import { Link } from "react-router-dom";
-import { ElementArr,TaskItemType } from "../../type/type";
+import { ElementArr, TaskItemType } from "../../type/type";
 
 const BoxTask = styled.div`
     display: flex;
@@ -14,12 +14,18 @@ const BoxTask = styled.div`
 const TaskDiv = styled.div`
     background: #ffffff;
     border-radius: 5px;
+    transition: all 0.2s ease;
+    &:hover {
+        transform: scale(0.97);
+    }
+`;
+const Text = styled.p`
+    margin: 0;
     padding: 8px;
 `;
 
-
 const TaskItem = ({ numberBlock }: TaskItemType): JSX.Element => {
-    const {initFullTask,dataArr} = useContext(Context);
+    const { initFullTask, dataArr } = useContext(Context);
 
     //выводит развернутую заметку с описанием
     const clickTask = (el: ElementArr, index: number): void => {
@@ -35,7 +41,7 @@ const TaskItem = ({ numberBlock }: TaskItemType): JSX.Element => {
                     }}
                     key={index}
                 >
-                    {el.name}
+                    <Text>{el.name}</Text>
                 </TaskDiv>
             </Link>
         );
