@@ -1,36 +1,37 @@
 type DataArrType = [
     {
         title: string;
-        arrTask: Array<object>;
+        arrTask: Array<ElementArr>;
     },
     {
         title: string;
-        arrTask: Array<object>;
+        arrTask: Array<ElementArr>;
     },
     {
         title: string;
-        arrTask: Array<object>;
+        arrTask: Array<ElementArr>;
     },
     {
         title: string;
-        arrTask: Array<object>;
+        arrTask: Array<ElementArr>;
     }
 ];
 
+
 interface ElementArr {
-    nameBlock: string;
-    id: number;
-    name: string;
-    description: string;
+    nameBlock: string,
+    id: number,
+    name: string,
+    description: string,
 }
 interface TaskItemType {
     numberBlock: number;
 }
 interface MainType {
-    dataArr: any;
+    dataArr: DataArrType;
 }
 interface SelectTaskType {
-    changeSelect: any;
+    changeSelect:any;
     numberBlock: number;
 }
 interface TaskBlockType {

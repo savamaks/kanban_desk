@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Router } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header";
 import Footer from "./components/footer/Footer";
 import Main from "./components/Main/Main";
-import { ElementArr, DataArrType } from "./type/type";
+import { ElementArr, DataArrType, FullTaskType } from "./type/type";
 import { Context } from "./components/TaskBlock/context";
 
 const ContainerApp = styled.div`
@@ -46,12 +46,12 @@ const App = (): JSX.Element => {
             arrTask: [],
         },
     ]);
-    const [amountActive, setAmountActive] = useState<[number,number]>([
+    const [amountActive, setAmountActive] = useState<[number, number]>([
         dataArr[0].arrTask.length + dataArr[1].arrTask.length + dataArr[2].arrTask.length,
         dataArr[3].arrTask.length,
     ]);
     //проверка есть ли в local storage сохраненные задачи
-    const arrMemory = () => {
+    const arrMemory = (): void => {
         if (localStorage.length === 0) return;
         let dataArrLocalMemory: any = localStorage.getItem("dataArr");
         if (dataArrLocalMemory === null) return;
@@ -90,7 +90,7 @@ const App = (): JSX.Element => {
         memory();
     };
     // сохраняет данные в local storage
-    const memory = () => {
+    const memory = (): void => {
         localStorage.setItem("dataArr", JSON.stringify(dataArr));
     };
     // инициализация развертывания описания заметки
@@ -99,23 +99,21 @@ const App = (): JSX.Element => {
     };
 
     //запуск проверки local storage
-    useEffect(() => {
+    useEffect((): void => {
         arrMemory();
     }, []);
-
 
     useEffect((): void => {
         setAmountActive([dataArr[0].arrTask.length + dataArr[1].arrTask.length + dataArr[2].arrTask.length, dataArr[3].arrTask.length]);
     }, [dataArr]);
 
-
     return (
         <ContainerApp>
-                <Context.Provider value={{ initTask, initFullTask, saveNewTask, fullTask, dataArr }}>
-                    <Header />
-                    <Main dataArr={dataArr} />
-                    <Footer amountActive={amountActive[0]} amountFinished={amountActive[1]} />
-                </Context.Provider>
+            <Context.Provider value={{ initTask, initFullTask, saveNewTask, fullTask, dataArr }}>
+                <Header />
+                <Main dataArr={dataArr} />
+                <Footer amountActive={amountActive[0]} amountFinished={amountActive[1]} />
+            </Context.Provider>
         </ContainerApp>
     );
 };

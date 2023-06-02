@@ -66,6 +66,12 @@ const InputBlock = ({ numberBlock, blockRef, mainInput }: InputBlock): JSX.Eleme
             });
             setInput("");
         } else if (valueOption !== ""&&valueOption !== "one") {
+            console.log({
+                nameBlock: blockRef.current.dataset.nameblock,
+                name: valueOption,
+                arrBlock: dataArr[numberBlock],
+                previousArrBlock: dataArr[numberBlock - 1],
+            });
             initTask({
                 nameBlock: blockRef.current.dataset.nameblock,
                 name: valueOption,

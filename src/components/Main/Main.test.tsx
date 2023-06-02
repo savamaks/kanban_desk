@@ -7,14 +7,11 @@ const amoutTask = (): void => {};
 const dataArr: DataArrType = [
     {
         title: "Backlog",
-        arrTask: [
-            {
-                numberBlock: 1,
-                nameBlock: "string",
-                mainInput: true,
-                title: "string",
-            },
-        ],
+        arrTask: [{ 
+            nameBlock: "Backlog", 
+            id: 1685386424, name: "апр", 
+            description: "123" 
+        }],
     },
     {
         title: "Ready",
@@ -31,11 +28,11 @@ const dataArr: DataArrType = [
 ];
 describe("Main render", () => {
     it("task block", () => {
-        render(<Main  dataArr={dataArr} />);
-       
+        render(<Main dataArr={dataArr} />);
+
         expect(screen.getByText(/Backlog/i)).toBeInTheDocument();
         expect(screen.getByText(/Ready/i)).toBeInTheDocument();
-        expect(screen.getByText(/InProgress/i)).toBeInTheDocument();
+        expect(screen.getByText(/In Progress/i)).toBeInTheDocument();
         expect(screen.getByText(/Finished/i)).toBeInTheDocument();
     });
 });
