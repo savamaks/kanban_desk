@@ -20,7 +20,7 @@ const Form = styled.form`
     align-items: start;
     gap: 15px;
 `;
-const Button = styled.button<{ cursor: string, bg: string; color: string }>`
+const Button = styled.button<{colorActive:string, cursor: string, bg: string; color: string }>`
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -29,6 +29,12 @@ const Button = styled.button<{ cursor: string, bg: string; color: string }>`
     color: ${(props) => props.color};
     background: ${(props) => props.bg};
     border-radius: 5px;
+    &:hover {
+        &:enabled {
+           color: ${(props) => props.colorActive};
+        }
+    }
+   
 `;
 
 interface InputBlock {
@@ -99,6 +105,7 @@ const InputBlock = ({ numberBlock, blockRef, mainInput }: InputBlock): JSX.Eleme
                 cursor={dataArr[numberBlock - 1]?.arrTask.length === 0 ? 'auto' : 'pointer'}
                 bg={!click ? "none" : "#0079BF"}
                 color={!click ? "#5E6C84" : "#FFFFFF"}
+                colorActive={!click ? "#0079BF" : "#FFFFFF"}
             >
                 {!click ? "+Add card" : "Submit"}
             </Button>
