@@ -35,8 +35,8 @@ describe("InputBlock", () => {
 
         //в списке выбрали элемент
         userEvent.selectOptions(getByRole("combobox"), "one");
-        const t: any = getByText("-Select a Task-");
-        expect(t.selected).toBeTruthy();
+        const selectElement: any = getByText("-Select a Task-");
+        expect(selectElement.selected).toBeTruthy();
 
         //нашли кнопку Submit и нажали
         const buttonSubmit = getByText("Submit");

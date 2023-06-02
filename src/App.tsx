@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Router } from "react-router-dom";
+import { BrowserRouter, Router, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header";
 import Footer from "./components/footer/Footer";
@@ -108,13 +108,15 @@ const App = (): JSX.Element => {
     }, [dataArr]);
 
     return (
-        <ContainerApp>
-            <Context.Provider value={{ initTask, initFullTask, saveNewTask, fullTask, dataArr }}>
-                <Header />
-                <Main dataArr={dataArr} />
-                <Footer amountActive={amountActive[0]} amountFinished={amountActive[1]} />
-            </Context.Provider>
-        </ContainerApp>
+        
+                <ContainerApp>
+                    <Context.Provider value={{ initTask, initFullTask, saveNewTask, fullTask, dataArr }}>
+                        <Header />
+                        <Main dataArr={dataArr} />
+                        <Footer amountActive={amountActive[0]} amountFinished={amountActive[1]} />
+                    </Context.Provider>
+                </ContainerApp>
+        
     );
 };
 

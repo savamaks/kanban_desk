@@ -1,17 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import Main from "./Main";
 import { DataArrType } from "../../type/type";
+import { Routes,MemoryRouter } from "react-router";
 
 const amoutTask = (): void => {};
 
 const dataArr: DataArrType = [
     {
         title: "Backlog",
-        arrTask: [{ 
-            nameBlock: "Backlog", 
-            id: 1685386424, name: "апр", 
-            description: "123" 
-        }],
+        arrTask: [
+            {
+                nameBlock: "Backlog",
+                id: 1685386424,
+                name: "апр",
+                description: "123",
+            },
+        ],
     },
     {
         title: "Ready",
@@ -28,7 +32,11 @@ const dataArr: DataArrType = [
 ];
 describe("Main render", () => {
     it("task block", () => {
-        render(<Main dataArr={dataArr} />);
+        render(
+            <MemoryRouter>
+                <Main dataArr={dataArr} />
+            </MemoryRouter>
+        );
 
         expect(screen.getByText(/Backlog/i)).toBeInTheDocument();
         expect(screen.getByText(/Ready/i)).toBeInTheDocument();

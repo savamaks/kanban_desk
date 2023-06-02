@@ -67,15 +67,16 @@ const FullTask = ({ element, indexElement }: FullTaskType): JSX.Element => {
         }
     };
     return (
-        <Container>
+             <Container>
             <Title>{element.name}</Title>
             <InputTextArea onChange={changeDescription} placeholder="Введите текст заметки...." defaultValue={element.description}></InputTextArea>
-            <Button onClick={closeFullTask}>
+            <Button data-testid='closeFullTask' onClick={closeFullTask}>
                 <Link style={{ textDecoration: "none" }} to="/">
                     {"\u2716"}
                 </Link>
             </Button>
         </Container>
+       
     );
 };
 

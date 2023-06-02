@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import { Context } from "./context";
-import { Link } from "react-router-dom";
+import { Link, Routes } from "react-router-dom";
 import { ElementArr, TaskItemType } from "../../type/type";
 
 const BoxTask = styled.div`
@@ -27,6 +27,7 @@ const TaskItem = ({ numberBlock }: TaskItemType): JSX.Element => {
     
     const item = dataArr[numberBlock].arrTask.map((el: any, index: number): JSX.Element => {
         return (
+           
             <Link key={el.id} to={`/tasks/id${el.id}`}>
                 <TaskDiv
                     onClick={(): void => {
